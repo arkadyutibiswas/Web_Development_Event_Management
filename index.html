@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AFTERCLASS | IEM AIML Events</title>
+<style>
+  :root { --dark:#0b0d18; --box:#171a29; --lime:#d8ff62;
+          --pink:#ff8dbe; --blue:#a1a0ff; --soft:#adb2c5; }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:var(--dark); color:white;
+         font-family:Arial,Helvetica,sans-serif; }
+  a { text-decoration:none; color:inherit; }
+  button,input,select { font:inherit; }
+  button { cursor:pointer; }
+  .wrap { width:min(1120px,90%); margin:auto; }
+  .top { background:var(--lime); color:#161b0a; text-align:center;
+         padding:9px; font-size:11px; font-weight:bold; letter-spacing:2px; }
+  header { background:#0b0d18eb; position:sticky; top:0; z-index:10;
+           border-bottom:1px solid #303347; backdrop-filter:blur(15px); }
+  nav { height:77px; display:flex; align-items:center;
+        justify-content:space-between; gap:20px; }
+  .brand { font-size:23px; font-weight:900; letter-spacing:-1.5px; }
+  .brand b { display:inline-block; background:var(--lime); color:#141615;
+             padding:7px 10px; border-radius:10px; transform:rotate(-8deg); }
+  .brand small { display:block; font-size:9px; letter-spacing:2px;
+                 color:var(--soft); margin:5px 0 0 51px; }
+  .links { display:flex; gap:30px; color:#c5c6d3; font-size:13px; }
+  .links a:hover { color:var(--lime); }
+  .btn { border:0; border-radius:40px; background:var(--lime);
+         color:#11160d; padding:14px 22px; font-weight:bold; font-size:13px;
+         display:inline-block; transition:.25s; }
+  .btn:hover { transform:translateY(-4px); box-shadow:0 10px 28px #d8ff6240; }
+  .ghost { background:transparent; color:white; border:1px solid #65687c; }
+  .ghost:hover { border-color:var(--lime); box-shadow:none; }
+  .hero { position:relative; overflow:hidden; padding:94px 0 85px;
+          background:radial-gradient(circle at 75% 45%,#533e9b88,transparent 38%),
+          linear-gradient(140deg,#111626,#0b0d18 70%); }
+  .hero:before { content:""; position:absolute; inset:0; opacity:.1;
+       background-image:linear-gradient(90deg,#fff 1px,transparent 1px),
+       linear-gradient(#fff 1px,transparent 1px); background-size:60px 60px; }
+  .hero-grid { position:relative; display:grid; grid-template-columns:1fr 1fr;
+               align-items:center; gap:45px; }
+  .eyebrow { color:var(--lime); text-transform:uppercase; letter-spacing:3px;
+             font-size:11px; font-weight:900; }
+  h1,h2,h3,p { margin-top:0; }
+  h1 { font-size:clamp(55px,7vw,104px); line-height:.97;
+       letter-spacing:-6px; margin:22px 0 25px; }
+  h1 em { font-style:normal; color:transparent;
+          -webkit-text-stroke:2px var(--lime); }
+  .intro { font-size:15px; line-height:1.9; color:var(--soft);
+           max-width:480px; margin-bottom:28px; }
+  .actions { display:flex; flex-wrap:wrap; gap:12px; }
+  .hero-note { color:#aaaec5; margin-top:44px; font-size:12px; }
+  .hero-note strong { color:var(--lime); }
+  .visual { min-height:490px; display:grid; place-items:center;
+            position:relative; }
+  .ring { width:520px; height:520px; border:1px solid #d8ff6247;
+          border-radius:50%; position:absolute; animation:spin 23s linear infinite; }
+  .ring:after { content:"✳"; color:var(--lime); font-size:55px;
+                position:absolute; right:35px; top:52px; }
+  .ring.two { width:420px; height:420px; border-color:#ff8dbe77;
+              animation-direction:reverse; transform:rotate(30deg); }
+  .poster { position:relative; width:345px; height:430px; padding:25px;
+            border-radius:17px; overflow:hidden; color:#141628;
+            background:linear-gradient(145deg,#e2ff74,#a5ee9c 65%,#97acff);
+            transform:rotate(8deg); box-shadow:25px 35px 70px #0009;
+            display:flex; flex-direction:column; justify-content:space-between;
+            animation:float 5s ease-in-out infinite; }
+  .poster:before { content:""; width:370px; height:370px; position:absolute;
+      border:65px solid #18162b; border-radius:50%; left:-100px; top:90px; }
+  .poster-top,.poster-title,.poster-bottom { position:relative; z-index:1; }
+  .poster-top { font-size:11px; font-weight:bold; letter-spacing:3px;
+                display:flex; justify-content:space-between; }
+  .poster-title { font-size:73px; line-height:.86; letter-spacing:-7px;
+                  color:white; font-weight:900; }
+  .poster-title small { display:block; color:var(--lime); font-size:11px;
+                        letter-spacing:4px; margin-top:19px; }
+  .poster-bottom { display:flex; justify-content:space-between;
+                   font-weight:900; font-size:20px; }
+  .ticket { position:absolute; bottom:18px; left:4px; background:white;
+            color:#171827; border-radius:13px; padding:18px 25px;
+            transform:rotate(-11deg); box-shadow:0 14px 40px #0006;
+            font-weight:900; animation:float 4s ease-in-out infinite reverse; }
+  .ticker { overflow:hidden; padding:17px 0; background:var(--lime);
+            color:#10150b; font-size:16px; font-weight:900; white-space:nowrap; }
+  .ticker span { display:block; width:max-content; animation:slide 24s linear infinite; }
+  section { scroll-margin-top:90px; }
+  .section { padding:95px 0; }
+  .heading { display:flex; align-items:end; justify-content:space-between;
+             gap:22px; margin-bottom:30px; }
+  h2 { font-size:clamp(39px,5vw,62px); letter-spacing:-3px;
+       line-height:1.05; margin:10px 0 0; }
+  h2 i { font-style:normal; color:var(--blue); }
+  .hint { max-width:280px; color:var(--soft); font-size:13px; line-height:1.8; }
+  .tools { display:flex; justify-content:space-between; gap:14px;
+           flex-wrap:wrap; margin-bottom:25px; }
+  .filters { display:flex; gap:8px; flex-wrap:wrap; }
+  .chip { color:#c7c9d9; background:var(--box); border:1px solid #35384c;
+          border-radius:30px; padding:11px 17px; font-size:12px; }
+  .chip.active,.chip:hover { background:var(--lime); color:#11170d; }
+  #search { padding:11px 17px; border:1px solid #35384c; border-radius:30px;
+            background:var(--box); color:white; outline:none; }
+  .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .card { overflow:hidden; border:1px solid #35384c; border-radius:20px;
+          background:var(--box); transition:transform .25s,border-color .25s; }
+  .card:hover { transform:translateY(-8px); border-color:var(--lime); }
+  .art { height:185px; padding:18px; display:flex; flex-direction:column;
+         justify-content:space-between; position:relative; overflow:hidden;
+         background:linear-gradient(125deg,var(--a),var(--b)); color:#161529; }
+  .art:before { content:""; width:205px; height:205px; border:35px solid #1c193144;
+                border-radius:50%; position:absolute; right:-75px; bottom:-110px; }
+  .art span,.art strong { position:relative; z-index:1; }
+  .art span { font-size:10px; font-weight:900; letter-spacing:2px; }
+  .art strong { font-size:43px; line-height:.9; letter-spacing:-3px; }
+  .card-body { padding:21px; }
+  .meta { color:var(--lime); font-size:11px; font-weight:bold; }
+  .card h3 { font-size:21px; margin:12px 0 8px; }
+  .card p { font-size:12px; color:var(--soft); line-height:1.7;
+            min-height:42px; }
+  .bottom { border-top:1px solid #34384a; display:flex; margin-top:19px;
+            padding-top:16px; align-items:center; justify-content:space-between; }
+  .bottom small { color:#adb0c1; }
+  .bottom button { background:var(--lime); border:0; border-radius:50%;
+                   width:34px; height:34px; font-size:19px; }
+  .feature { padding:0 0 100px; }
+  .feature-box { display:grid; grid-template-columns:1fr 1fr; overflow:hidden;
+                 border:1px solid #3a3c53; border-radius:25px; }
+  .feature-art { padding:65px 35px; background:#bdacff; color:#18172f;
+                 display:grid; place-items:center; text-align:center;
+                 font-size:clamp(55px,7vw,95px); line-height:.82;
+                 font-weight:900; letter-spacing:-7px; text-shadow:7px 9px #ffffff88; }
+  .feature-art span { display:block; transform:rotate(-8deg); }
+  .feature-info { background:#1a1d2d; padding:60px 50px; }
+  .feature-info p { color:var(--soft); line-height:1.9; font-size:14px; }
+  .planner { background:#121524; padding:85px 0; }
+  .timeline { display:grid; grid-template-columns:repeat(3,1fr); gap:16px;
+              margin-top:30px; }
+  .day { background:#1c2031; padding:25px; border:1px solid #383c51;
+         border-radius:18px; }
+  .day b { display:block; color:var(--lime); font-size:34px; }
+  .day h3 { margin:14px 0 8px; }
+  .day p { color:var(--soft); font-size:12px; }
+  .dept { padding:85px 0; }
+  .people { display:grid; grid-template-columns:repeat(3,1fr); gap:16px;
+            margin-top:28px; }
+  .person { padding:24px; border:1px solid #36394c; border-radius:17px;
+            background:#171a29; }
+  .person b { display:block; font-size:19px; margin:16px 0 8px; }
+  .person small { color:var(--soft); }
+  .avatar { display:grid; place-items:center; width:49px; height:49px;
+            border-radius:13px; background:var(--lime); color:#141923;
+            font-weight:900; }
+  .person:nth-child(2) .avatar { background:var(--blue); }
+  .person:nth-child(3) .avatar { background:var(--pink); }
+  footer { border-top:1px solid #34384a; padding:28px 0 40px;
+           color:#a9acbc; font-size:12px; }
+  footer .wrap { display:flex; justify-content:space-between; gap:15px; }
+  dialog { color:white; background:#1b1e2d; border:1px solid #5a6075;
+           border-radius:20px; padding:30px; width:min(430px,92%); }
+  dialog::backdrop { background:#05060ac9; backdrop-filter:blur(6px); }
+  dialog h3 { font-size:27px; }
+  dialog input,dialog select { display:block; width:100%; margin:13px 0;
+           padding:13px; border:1px solid #55586c; border-radius:9px;
+           background:#111421; color:white; }
+  .close { float:right; border:0; background:none; color:white; font-size:25px; }
+  #status { color:var(--lime); font-size:13px; }
+  @keyframes float { 50% { translate:0 -16px; } }
+  @keyframes spin { to { rotate:360deg; } }
+  @keyframes slide { to { transform:translateX(-50%); } }
+  @media(max-width:850px) {
+    .links { display:none; }
+    .hero-grid,.feature-box { grid-template-columns:1fr; }
+    .visual { min-height:460px; }
+    .cards,.timeline,.people { grid-template-columns:repeat(2,1fr); }
+    .heading { display:block; }
+  }
+  @media(max-width:580px) {
+    nav { height:68px; }
+    .brand { font-size:18px; }
+    .hero { padding:60px 0; }
+    h1 { font-size:58px; letter-spacing:-4px; }
+    .visual { min-height:355px; }
+    .poster { width:245px; height:305px; }
+    .poster-title { font-size:52px; }
+    .ring { width:330px; height:330px; }
+    .ring.two { width:280px; height:280px; }
+    .ticket { padding:12px; }
+    .cards,.timeline,.people { grid-template-columns:1fr; }
+    .feature-info { padding:35px 26px; }
+    .section { padding:65px 0; }
+    footer .wrap { flex-direction:column; }
+  }
+</style>
+</head>
+<body>
+<div class="top">✳ IEM KOLKATA · CSE (AI & ML) · STUDENT EVENT CONCEPT ✳</div>
+<header><nav class="wrap">
+  <a href="#home" class="brand"><b>A.</b> AFTERCLASS<small>THE CAMPUS EDITION</small></a>
+  <div class="links"><a href="#events">Events</a><a href="#planner">Planner</a>
+    <a href="#department">Our Department</a></div>
+  <a class="btn" href="#events">Explore ↗</a>
+</nav></header>
+<main>
+<section class="hero" id="home"><div class="wrap hero-grid">
+  <div>
+    <div class="eyebrow">● Your campus. Your story.</div>
+    <h1>BEYOND<br>THE <em>CLASS<br>ROOM.</em></h1>
+    <p class="intro">Where ideas become prototypes, strangers become teammates,
+      and ordinary college days become something worth remembering.</p>
+    <div class="actions"><a class="btn" href="#events">Discover events ↗</a>
+      <a class="btn ghost" href="#planner">View planner →</a></div>
+    <div class="hero-note"><strong>06 DEMO EVENTS</strong> &nbsp; ✳ &nbsp;
+      TECH / CREATIVE / CAMPUS &nbsp; ✳ &nbsp; IEM AIML</div>
+  </div>
+  <div class="visual"><div class="ring"></div><div class="ring two"></div>
+    <div class="poster"><div class="poster-top"><span>AFTERCLASS / 26</span><span>001 ↗</span></div>
+      <div class="poster-title">HACK<br>THE<br>HORIZON<small>BUILD WHAT'S NEXT_</small></div>
+      <div class="poster-bottom"><span>24 OCT<br>2026</span><span>✳</span></div>
+    </div><div class="ticket">✳ ADMIT ONE<br><small>YOUR NEXT BIG THING ↗</small></div>
+  </div>
+</div></section>
+<div class="ticker"><span>✳ MAKE SOMETHING NEW &nbsp; ↗ MEET YOUR PEOPLE &nbsp;
+  ✳ LIVE OUTSIDE THE SYLLABUS &nbsp; ↗ BE THE MOMENT &nbsp;
+  ✳ MAKE SOMETHING NEW &nbsp; ↗ MEET YOUR PEOPLE &nbsp;
+  ✳ LIVE OUTSIDE THE SYLLABUS &nbsp; ↗ BE THE MOMENT &nbsp;</span></div>
+<section class="section" id="events"><div class="wrap">
+  <div class="heading"><div><div class="eyebrow">01 / THE LINEUP</div>
+    <h2>Find your next <i>big thing.</i></h2></div>
+    <p class="hint">From code to culture, discover the moments that make campus life.</p>
+  </div>
+  <div class="tools"><div class="filters">
+    <button class="chip active" onclick="filterEvents('All',this)">All Events</button>
+    <button class="chip" onclick="filterEvents('Tech',this)">Tech</button>
+    <button class="chip" onclick="filterEvents('Creative',this)">Creative</button>
+    <button class="chip" onclick="filterEvents('Campus',this)">Campus</button>
+  </div><input id="search" placeholder="⌕  Search an event..." oninput="filterEvents()"></div>
+  <div class="cards" id="cards">
+    <article class="card" data-type="Tech"><div class="art" style="--a:#e6ff79;--b:#83dcaf">
+      <span>01 / HACKATHON</span><strong>HACK<br>HORIZON ↗</strong></div>
+      <div class="card-body"><div class="meta">24 OCT 2026 · 09:00 AM</div>
+        <h3>Hack the Horizon</h3><p>A 24-hour challenge for builders and bold ideas.</p>
+        <div class="bottom"><small>⌖ Innovation Lab</small>
+          <button onclick="register('Hack the Horizon')">↗</button></div></div></article>
+    <article class="card" data-type="Creative"><div class="art" style="--a:#cfb1ff;--b:#8975fa">
+      <span>02 / DESIGN JAM</span><strong>PIXEL<br>PUNCH ✳</strong></div>
+      <div class="card-body"><div class="meta">28 OCT 2026 · 11:00 AM</div>
+        <h3>Pixel Punch</h3><p>Design, experiment and build eye-catching interfaces.</p>
+        <div class="bottom"><small>⌖ Design Studio</small>
+          <button onclick="register('Pixel Punch')">↗</button></div></div></article>
+    <article class="card" data-type="Campus"><div class="art" style="--a:#ffb995;--b:#ff8dbe">
+      <span>03 / QUIZ</span><strong>BRAIN<br>WAVE ?</strong></div>
+      <div class="card-body"><div class="meta">03 NOV 2026 · 02:00 PM</div>
+        <h3>Brainwave Quiz</h3><p>Fast questions, quick thinking and friendly competition.</p>
+        <div class="bottom"><small>⌖ Seminar Hall</small>
+          <button onclick="register('Brainwave Quiz')">↗</button></div></div></article>
+    <article class="card" data-type="Tech"><div class="art" style="--a:#9ddcf8;--b:#8987ff">
+      <span>04 / WORKSHOP</span><strong>MODEL<br>LAB &lt;/&gt;</strong></div>
+      <div class="card-body"><div class="meta">09 NOV 2026 · 10:30 AM</div>
+        <h3>Model Lab</h3><p>Try machine learning through beginner-friendly demos.</p>
+        <div class="bottom"><small>⌖ AIML Lab</small>
+          <button onclick="register('Model Lab')">↗</button></div></div></article>
+    <article class="card" data-type="Campus"><div class="art" style="--a:#ffc078;--b:#ff839b">
+      <span>05 / CULTURAL</span><strong>SPECTRUM<br>NIGHT ♪</strong></div>
+      <div class="card-body"><div class="meta">14 NOV 2026 · 05:00 PM</div>
+        <h3>Spectrum Night</h3><p>Music, performances and memories after lectures.</p>
+        <div class="bottom"><small>⌖ College Auditorium</small>
+          <button onclick="register('Spectrum Night')">↗</button></div></div></article>
+    <article class="card" data-type="Creative"><div class="art" style="--a:#aaf4c1;--b:#56c6ca">
+      <span>06 / STARTUP PITCH</span><strong>PITCH<br>PULSE ↗</strong></div>
+      <div class="card-body"><div class="meta">20 NOV 2026 · 01:00 PM</div>
+        <h3>Pitch Pulse</h3><p>Share your startup idea in five exciting minutes.</p>
+        <div class="bottom"><small>⌖ E-Cell Room</small>
+          <button onclick="register('Pitch Pulse')">↗</button></div></div></article>
+  </div>
+  <p id="empty" style="display:none;color:#bec4d1">No events found. Try another search.</p>
+</div></section>
+<section class="feature"><div class="wrap feature-box">
+  <div class="feature-art"><span>THINK.<br>BUILD.<br>REPEAT. ✳</span></div>
+  <div class="feature-info"><div class="eyebrow">02 / FEATURED EVENT</div>
+    <h2>One day.<br><i>Big ideas.</i></h2>
+    <p>Hack the Horizon brings together curious minds for a creative coding
+       challenge. Form a team, build a prototype and show what you can do.</p>
+    <button class="btn" onclick="register('Hack the Horizon')">Join the challenge ↗</button>
+  </div>
+</div></section>
+<section class="planner" id="planner"><div class="wrap">
+  <div class="eyebrow">03 / SAVE THE DATES</div><h2>Your mini <i>planner.</i></h2>
+  <div class="timeline">
+    <div class="day"><b>24 OCT</b><h3>Hack the Horizon</h3><p>Saturday · Innovation Lab</p></div>
+    <div class="day"><b>28 OCT</b><h3>Pixel Punch</h3><p>Wednesday · Design Studio</p></div>
+    <div class="day"><b>03 NOV</b><h3>Brainwave Quiz</h3><p>Tuesday · Seminar Hall</p></div>
+  </div>
+</div></section>
+<section class="dept" id="department"><div class="wrap">
+  <div class="eyebrow">04 / BEHIND THE SCENES</div>
+  <h2>Powered by <i>our department.</i></h2>
+  <p class="hint">CSE (Artificial Intelligence & Machine Learning), IEM Kolkata.</p>
+  <div class="people">
+    <div class="person"><span class="avatar">HOD</span><b>Dr. Amartya Mukherjee</b>
+      <small>Head of Department · CSE (AI & ML)</small></div>
+    <div class="person"><span class="avatar">TC</span><b>Prof. Subhabrata Sengupta</b>
+      <small>Technical Lead & Hackathon Convener*</small></div>
+    <div class="person"><span class="avatar">CC</span><b>Prof. Piyali Mukherjee</b>
+      <small>Cultural Fest Coordinator*</small></div>
+  </div>
+  <p style="color:#81859d;font-size:10px;margin-top:16px">
+    *Faculty roles from the supplied reference; verify before official use.</p>
+</div></section>
+</main>
+<footer><div class="wrap"><span>AFTERCLASS © 2026 · IEM AIML STUDENT PROJECT</span>
+  <span>Illustrative events and dates · Not an official registration website</span></div></footer>
+<dialog id="formBox"><button class="close" onclick="formBox.close()">×</button>
+  <div class="eyebrow">YOUR NEXT ADVENTURE</div><h3>Save your spot ✳</h3>
+  <p style="color:#aab0c4;font-size:13px">Demo registration for <b id="selected"></b></p>
+  <form id="regForm"><input type="text" placeholder="Full name" required>
+    <input type="email" placeholder="College email" required>
+    <select required><option value="">Select department</option>
+      <option>CSE (AI & ML)</option><option>CSE</option><option>ECE</option>
+      <option>Other</option></select>
+    <button class="btn" type="submit">Register ↗</button>
+    <p id="status"></p>
+  </form>
+</dialog>
+<script>
+  let current='All';
+  function filterEvents(type,button) {
+    if(type) current=type;
+    if(button) {
+      document.querySelectorAll('.chip').forEach(b=>b.classList.remove('active'));
+      button.classList.add('active');
+    }
+    let count=0;
+    document.querySelectorAll('.card').forEach(card=>{
+      let matchType=current==='All'||card.dataset.type===current;
+      let matchText=card.innerText.toLowerCase().includes(
+        document.querySelector('#search').value.toLowerCase());
+      card.style.display=matchType&&matchText?'':'none';
+      if(matchType&&matchText) count++;
+    });
+    document.querySelector('#empty').style.display=count?'none':'block';
+  }
+  function register(eventName) {
+    document.querySelector('#selected').textContent=eventName;
+    document.querySelector('#status').textContent='';
+    document.querySelector('#formBox').showModal();
+  }
+  document.querySelector('#regForm').onsubmit=function(e) {
+    e.preventDefault();
+    document.querySelector('#status').textContent=
+      'Demo submitted! No information was sent to a server.';
+    this.reset();
+  };
+</script>
+</body>
+</html>
